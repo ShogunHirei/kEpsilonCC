@@ -190,6 +190,15 @@ kEpsilonCC<BasicTurbulenceModel>::kEpsilonCC
         )
     ),
 // end curvature correction
+    btStar_
+    (
+        dimensioned<scalar>::lookupOrAddToDict
+        (
+            "betaStar",
+            this->coeffDict_,
+            0.09
+        )
+    ),
 
     k_
     (
@@ -309,8 +318,8 @@ void kEpsilonCC<BasicTurbulenceModel>::correct()
                                                                        SMALL))));
     // volScalarField rStar(sqrt(symInnerProduct/w));
     // Determination of rTilda
-    // using omega = epsilon/k to replace omega
-    volScalarField D(sqrt(max(symInnerProduct, epsilon_*epsilon_/k_/k_/0.09)));
+    // using omega = epsilon/k/btStar to replace omega
+    volScalarField D(sqrt(max(symInnerProduct, 0.09*sqr(epsilon_/k_/btStar_))));
     tmp<volSymmTensorField> divS =
     (
         fvc::ddt(tSymm())

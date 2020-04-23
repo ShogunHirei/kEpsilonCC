@@ -90,6 +90,10 @@ protected:
             dimensionedScalar cr2_;
             dimensionedScalar cr3_;
 
+        // Added btStar (betaStar) coefficient to replace Omega in the D
+        // definition
+            dimensionedScalar btStar_;
+
         // Fields
 
             volScalarField k_;
